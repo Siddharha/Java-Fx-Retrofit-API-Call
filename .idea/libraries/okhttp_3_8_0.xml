@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="okhttp-3.8.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/okhttp-3.8.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/okio-1.13.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/retrofit-2.3.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/gson-2.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/converter-gson-2.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
