@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_network_demo" default="compile.module.network_demo">
+  <dirname property="module.network_demo.basedir" file="${ant.file.module_network_demo}"/>
+  
+  <property name="module.jdk.home.network_demo" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.network_demo" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.network_demo" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.network_demo" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="network_demo.output.dir" value="${module.network_demo.basedir}/out/production/Network Demo"/>
+  <property name="network_demo.testoutput.dir" value="${module.network_demo.basedir}/out/test/Network Demo"/>
+  
+  <path id="network_demo.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="network_demo.module.production.classpath">
+    <path refid="${module.jdk.classpath.network_demo}"/>
+    <path refid="library.okhttp-3.8.0.classpath"/>
+  </path>
+  
+  <path id="network_demo.runtime.production.module.classpath">
+    <pathelement location="${network_demo.output.dir}"/>
+    <path refid="library.okhttp-3.8.0.classpath"/>
+  </path>
+  
+  <path id="network_demo.module.classpath">
+    <path refid="${module.jdk.classpath.network_demo}"/>
+    <pathelement location="${network_demo.output.dir}"/>
+    <path refid="library.okhttp-3.8.0.classpath"/>
+  </path>
+  
+  <path id="network_demo.runtime.module.classpath">
+    <pathelement location="${network_demo.testoutput.dir}"/>
+    <pathelement location="${network_demo.output.dir}"/>
+    <path refid="library.okhttp-3.8.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.network_demo">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.network_demo">
+    <patternset refid="excluded.from.module.network_demo"/>
+  </patternset>
+  
+  <path id="network_demo.module.sourcepath">
+    <dirset dir="${module.network_demo.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.network_demo" depends="compile.module.network_demo.production,compile.module.network_demo.tests" description="Compile module Network Demo"/>
+  
+  <target name="compile.module.network_demo.production" depends="register.custom.compilers" description="Compile module Network Demo; production classes">
+    <mkdir dir="${network_demo.output.dir}"/>
+    <javac2 destdir="${network_demo.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.network_demo}/javac">
+      <compilerarg line="${compiler.args.network_demo}"/>
+      <bootclasspath refid="network_demo.module.bootclasspath"/>
+      <classpath refid="network_demo.module.production.classpath"/>
+      <src refid="network_demo.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.network_demo"/>
+    </javac2>
+    
+    <copy todir="${network_demo.output.dir}">
+      <fileset dir="${module.network_demo.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.network_demo.tests" depends="register.custom.compilers,compile.module.network_demo.production" description="compile module Network Demo; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.network_demo" description="cleanup module">
+    <delete dir="${network_demo.output.dir}"/>
+    <delete dir="${network_demo.testoutput.dir}"/>
+  </target>
+</project>
